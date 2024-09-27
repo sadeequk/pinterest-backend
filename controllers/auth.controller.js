@@ -9,18 +9,16 @@ module.exports.local_signup_post = async (req, res) => {
   try {
     const results = await joiSchemas.local_signup_post.validateAsync(req.body);
     let foundUser = await UserService.readByEmail(results.email);
-    console.log('====> email', results.email);
     if (foundUser) return res.fail('User with this email already exist');
 
     const newUser = await UserService.addUserBasic({
       email: results.email,
       password: results.password,
-      username: results.username,
+      dateOfBirth: results.dateOfBirth,
     });
 
     return res.success(generateToken(newUser));
   } catch (error) {
-    console.error('Error in local_signup_post controller: ', error);
     return res.serverError(error);
   }
 };
@@ -66,7 +64,6 @@ module.exports.forgot_password_post = async (req, res) => {
     if (!user) return res.fail('User with this email is not SignUp yet');
     const forgotPasswordCode = crypto.randomInt(100000, 999999);
     const passwordResetCodeExpiry = Date.now() + 3600000;
-    console.log('user id ===>' + user._id);
 
     await UserService.updateForgotPasswordCode(user._id, { passwordResetCodeExpiry, forgotPasswordCode });
     await mailer.sendMail({

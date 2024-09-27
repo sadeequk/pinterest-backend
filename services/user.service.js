@@ -11,11 +11,11 @@ module.exports.readByEmail = (email) =>
     }
   });
 
-module.exports.addUserBasic = ({ email, password, username }) =>
+module.exports.addUserBasic = ({ email, password, dateOfBirth }) =>
   new Promise(async (resolve, reject) => {
     try {
       const newUser = new User({
-        username: username.trim(),
+        dateOfBirth: dateOfBirth,
         email: email.toLowerCase().trim(),
         password: password.trim(),
       });

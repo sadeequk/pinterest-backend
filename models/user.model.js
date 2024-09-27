@@ -1,25 +1,27 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const userSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, auto: true },
-  email: { type: String },
-  password: { type: String },
-  username: { type: String },
-  bio: String,
-  avatarUrl: String,
-  website: String,
-  location: String,
-  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  boards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Board' }],
-  pins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pin' }],
-  forgotPasswordCode: { type: Number, default: null },
-  passwordResetCodeExpiry: { type: Number, default: null },
-  savedPins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pin' }],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+const userSchema = new mongoose.Schema(
+  {
+    userId: { type: mongoose.Schema.Types.ObjectId, auto: true },
+    email: { type: String },
+    password: { type: String },
+    username: { type: String },
+    dateOfBirth: { type: Date },
+    forgotPasswordCode: { type: Number, default: null },
+    passwordResetCodeExpiry: { type: Number, default: null },
+    bio: { type: String },
+    avatarUrl: { type: String },
+    website: { type: String },
+    location: { type: String },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    boards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Board' }],
+    pins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pin' }],
+    savedPins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pin' }],
+  },
+  { timestamps: true, minimize: false }
+);
 
 // Pre-save hook to hash password
 userSchema.pre('save', async function (next) {
