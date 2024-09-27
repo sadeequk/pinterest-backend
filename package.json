@@ -1,0 +1,27 @@
+{
+  "name": "pinterest",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/pinterest",
+    "dev": "nodemon ./bin/pinterest",
+    "development": "NODE_ENV=development  ./bin/pinterest",
+    "production": "NODE_ENV=production ./bin/pinterest"
+  },
+  "author": "sadeeq",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "http-errors": "^2.0.0",
+    "mongoose": "^8.6.3",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
