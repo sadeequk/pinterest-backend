@@ -11,8 +11,8 @@ const { mongooseConnection } = require('./config/db');
 const session = require('express-session');
 
 // Importing middlewares
-const loggerMiddleware = require('./middlewares/logger.middleware');
-const responseMiddleware = require('./middlewares/response.middleware');
+const loggerMiddleware = require('./middlewares/logger.mw');
+const responseMiddleware = require('./middlewares/response.mw');
 // App initialized
 var app = express();
 

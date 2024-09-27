@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   boards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Board' }],
   pins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pin' }],
+  forgotPasswordCode: { type: Number, default: null },
+  passwordResetCodeExpiry: { type: Number, default: null },
   savedPins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pin' }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
