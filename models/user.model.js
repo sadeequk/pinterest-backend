@@ -3,17 +3,17 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, auto: true },
+    // userId: { type: mongoose.Schema.Types.ObjectId, auto: true },
     email: { type: String },
     password: { type: String },
     username: { type: String },
     dateOfBirth: { type: Date },
     forgotPasswordCode: { type: Number, default: null },
     passwordResetCodeExpiry: { type: Number, default: null },
-    bio: { type: String },
-    avatarUrl: { type: String },
-    website: { type: String },
-    location: { type: String },
+    bio: { type: String, default: null },
+    avatarUrl: { type: String, default: null },
+    website: { type: String, default: null },
+    location: { type: String, default: null },
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     boards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Board' }],
