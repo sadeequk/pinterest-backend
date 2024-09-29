@@ -59,7 +59,7 @@ module.exports.updatePin = ({ pinName, description, tags, contentUrl, externalLi
         { new: true }
       );
       await updatedPin.save();
-      console.log(`Pin Service: Updated collection item [${id}]`);
+      console.log(`Pin Service: Updated Pin [${id}]`);
       return resolve(updatedPin);
     } catch (error) {
       return reject(error);
