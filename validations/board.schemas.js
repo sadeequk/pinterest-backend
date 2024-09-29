@@ -11,3 +11,14 @@ module.exports.board_put = Joi.object({
   description: Joi.string().required(),
   isPrivate: Joi.boolean().required(),
 });
+
+module.exports.add_pin = Joi.object({
+  pinId: Joi.string()
+    .required()
+    .regex(/^[0-9a-fA-F]{24}$/),
+});
+module.exports.remove_pin = Joi.object({
+  pinId: Joi.string()
+    .required()
+    .regex(/^[0-9a-fA-F]{24}$/),
+});

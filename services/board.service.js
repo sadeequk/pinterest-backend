@@ -1,4 +1,5 @@
 const Board = require('../models/board.model');
+const Pin = require('../models/pin.model');
 
 module.exports.createBoard = ({ name, description, userId, isPrivate }) =>
   new Promise(async (resolve, reject) => {
@@ -32,7 +33,7 @@ module.exports.getBoards = (id) =>
 module.exports.readById = (id) =>
   new Promise(async (resolve, reject) => {
     try {
-      const board = await Board.findById(id);
+      const board = await Board.findById(id).populate('pins');
       return resolve(board);
     } catch (error) {
       console.log(`Board Service [readById] Error`, error);
@@ -77,6 +78,60 @@ module.exports.deleteById = ({ userId, id }) =>
       return resolve(deleteBoard);
     } catch (error) {
       console.log(`Board Service [deleteById] Error`, error);
+      return reject(error);
+    }
+  });
+
+module.exports.addPin = (pinId, userId, boardId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const board = await Board.findById(boardId).populate('pins');
+      if (!board) {
+        return reject(new Error('Board not found'));
+      }
+
+      if (board.createdBy.toString() === userId.toString()) {
+        const pin = await Pin.findById(pinId);
+        if (!pin) {
+          return reject(new Error('Pin not found'));
+        }
+
+        board.pins.push(pin._id);
+        await board.save();
+
+        return resolve(board);
+      } else {
+        return reject(new Error('User is not authorized to modify this board'));
+      }
+    } catch (error) {
+      console.log('Board Service [addPin] Error:', error);
+      return reject(error);
+    }
+  });
+
+module.exports.removePin = (pinId, userId, boardId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const board = await Board.findById(boardId);
+      if (!board) {
+        return reject(new Error('Board not found'));
+      }
+
+      if (board.createdBy.toString() !== userId.toString()) {
+        return reject(new Error('User is not authorized to modify this board'));
+      }
+
+      const pinIndex = board.pins.indexOf(pinId);
+      if (pinIndex === -1) {
+        return reject(new Error('Pin not found in the board'));
+      }
+
+      board.pins.splice(pinIndex, 1);
+      await board.save();
+
+      return resolve(board);
+    } catch (error) {
+      console.log('Board Service [removePin] Error:', error);
       return reject(error);
     }
   });
