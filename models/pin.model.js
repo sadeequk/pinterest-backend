@@ -6,13 +6,14 @@ const pinSchema = new mongoose.Schema(
     pinName: { type: String },
     description: { type: String },
     contentUrl: { type: String },
-    tags: [{ type: String }], // Array of tag names
-    externalLink: { type: String }, // Optional for external link
+    tags: [{ type: String }],
+    externalLink: { type: String },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // assuming you have a User model
+      ref: 'User',
       required: true,
     },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'comment' }],
     savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // board: { type: mongoose.Schema.Types.ObjectId, ref: 'Board' },
   },

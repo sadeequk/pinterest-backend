@@ -24,7 +24,7 @@ module.exports.createPin = ({ pinName, userId, description = '', tags, contentUr
 module.exports.readById = (id) =>
   new Promise(async (resolve, reject) => {
     try {
-      const pin = await Pin.findById(id);
+      const pin = await Pin.findById(id).populate('comments');
       return resolve(pin);
     } catch (error) {
       console.log('Pin Service [readById] Error: ', error);

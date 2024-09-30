@@ -92,9 +92,7 @@ module.exports.addPin = (pinId, userId, boardId) =>
 
       if (board.createdBy.toString() === userId.toString()) {
         const pin = await Pin.findById(pinId);
-        if (!pin) {
-          return reject(new Error('Pin not found'));
-        }
+        if (!pin) return reject(new Error('Pin not found'));
 
         board.pins.push(pin._id);
         await board.save();
