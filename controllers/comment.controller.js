@@ -9,18 +9,18 @@ module.exports.comment_post = async (req, res) => {
       userId: req.user._id,
       pinId: req.params.pinId,
     });
-    res.success(comment);
+    return res.success(comment);
   } catch (error) {
-    res.serverError(error);
+    return res.serverError(error);
   }
 };
 
 module.exports.comments_get = async (req, res) => {
   try {
     const pinWithComments = await CommentService.getCommentsAndPin(req.params.pinId);
-    res.success(pinWithComments);
+    return res.success(pinWithComments);
   } catch (error) {
-    res.serverError(error);
+    return res.serverError(error);
   }
 };
 
@@ -32,9 +32,9 @@ module.exports.comment_put = async (req, res) => {
       userId: req.user._id,
       text: result.text,
     });
-    res.success(updatedComment);
+    return res.success(updatedComment);
   } catch (error) {
-    res.serverError(error);
+    return res.serverError(error);
   }
 };
 
@@ -45,7 +45,7 @@ module.exports.comment_delete = async (req, res) => {
       userId: req.user._id,
     });
 
-    res.success(response);
+    return res.success(response);
   } catch (error) {
     if (error.message === 'Comment not found') {
       return res.status(404).json({ message: error.message });
@@ -53,6 +53,6 @@ module.exports.comment_delete = async (req, res) => {
     if (error.message === 'Unauthorized') {
       return res.status(403).json({ message: error.message });
     }
-    res.serverError(error);
+    return res.serverError(error);
   }
 };
