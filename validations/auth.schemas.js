@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 const now = new Date();
 const hundredYearsAgo = new Date(now.setFullYear(now.getFullYear() - 100));
@@ -6,9 +6,9 @@ const hundredYearsAgo = new Date(now.setFullYear(now.getFullYear() - 100));
 module.exports.local_signup_post = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  dateOfBirth: Joi.date().iso().less('now').greater(hundredYearsAgo).required().messages({
-    'date.less': 'Date of birth must be in the past',
-    'date.greater': 'Date of birth cannot be more than 100 years ago',
+  dateOfBirth: Joi.date().iso().less("now").greater(hundredYearsAgo).required().messages({
+    "date.less": "Date of birth must be in the past",
+    "date.greater": "Date of birth cannot be more than 100 years ago",
   }),
 });
 
